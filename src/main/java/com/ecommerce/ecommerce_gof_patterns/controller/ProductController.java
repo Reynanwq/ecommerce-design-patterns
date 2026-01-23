@@ -3,6 +3,7 @@ package com.ecommerce.ecommerce_gof_patterns.controller;
 import com.ecommerce.ecommerce_gof_patterns.dto.ProductDTO;
 import com.ecommerce.ecommerce_gof_patterns.model.ProductCategory;
 import com.ecommerce.ecommerce_gof_patterns.service.ProductService;
+import com.ecommerce.ecommerce_gof_patterns.service.proxy.ProductServiceProxy;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
@@ -17,6 +18,7 @@ import java.util.List;
 public class ProductController {
 
     private final ProductService productService;
+    private final ProductServiceProxy productServiceProxy;
 
     @GetMapping
     public ResponseEntity<List<ProductDTO>> getAllProducts() {
@@ -25,7 +27,7 @@ public class ProductController {
 
     @GetMapping("/{id}")
     public ResponseEntity<ProductDTO> getProductById(@PathVariable Long id) {
-        return ResponseEntity.ok(productService.getProductById(id));
+        return ResponseEntity.ok(productServiceProxy.getProductById(id));
     }
 
     @PostMapping
