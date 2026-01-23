@@ -114,7 +114,7 @@ mvn spring-boot:run
 - [ ] **Decorator** - Adição de recursos a produtos (embalagem, garantia)
 - [ ] **Facade** - Simplificação do processo de checkout
 - [ ] **Flyweight** - Compartilhamento de dados de produtos
-- [ ] **Proxy** - Cache e lazy loading
+- [x] **Proxy** - Cache e lazy loading
 
 ### Padrões Comportamentais
 - [ ] **Chain of Responsibility** - Validação e processamento de pedidos
