@@ -6,17 +6,6 @@ Sistema de loja virtual desenvolvido em Java com Spring Boot para demonstração
 
 Sistema de e-commerce que permite clientes navegarem por produtos, fazerem pedidos online, escolherem forma de pagamento e receberem em casa. O sistema gerencia catálogo de produtos organizados por categorias, cadastro de clientes com múltiplos endereços, criação e acompanhamento de pedidos com diferentes status (pendente, confirmado, processando, enviado, entregue), controle de estoque automático e cálculo de valores (subtotal, frete, descontos).
 
-## 🚀 Tecnologias Utilizadas
-
-- **Java 17**
-- **Spring Boot 3.2.0**
-- **Spring Data JPA**
-- **MySQL** (banco de dados local)
-- **Lombok** (redução de boilerplate)
-- **ModelMapper** (conversão entre entidades e DTOs)
-- **SpringDoc OpenAPI** (documentação Swagger)
-- **Maven** (gerenciamento de dependências)
-
 ## 📋 Estrutura do Projeto
 
 ```
@@ -41,7 +30,7 @@ src/main/java/com/ecommerce/
 ## 🔧 Como Executar
 
 ### Pré-requisitos
-- Java 17 ou superior
+- Java 21 ou superior
 - Maven 3.6 ou superior
 - MySQL 8.0 ou superior
 
