@@ -105,14 +105,14 @@ mvn spring-boot:run
 - [ ] **Abstract Factory** - Famílias de produtos relacionados
 - [ ] **Builder** - Construção complexa de pedidos
 - [ ] **Prototype** - Clonagem de produtos/pedidos
-- [ ] **Singleton** - Configurações da aplicação
+- [x] **Singleton** - Configurações da aplicação
 
 ### Padrões Estruturais
 - [ ] **Adapter** - Integração com gateways de pagamento
 - [ ] **Bridge** - Separação de tipos de produto e suas representações
 - [ ] **Composite** - Estrutura de categorias de produtos
-- [ ] **Decorator** - Adição de recursos a produtos (embalagem, garantia)
-- [ ] **Facade** - Simplificação do processo de checkout
+- [x] **Decorator** - Adição de recursos a produtos (embalagem, garantia)
+- [x] **Facade** - Simplificação do processo de checkout
 - [ ] **Flyweight** - Compartilhamento de dados de produtos
 - [x] **Proxy** - Cache e lazy loading
 
@@ -122,10 +122,10 @@ mvn spring-boot:run
 - [ ] **Iterator** - Navegação em coleções
 - [ ] **Mediator** - Comunicação entre componentes
 - [ ] **Memento** - Histórico de estados
-- [ ] **Observer** - Notificações de mudanças de status
+- [x] **Observer** - Notificações de mudanças de status
 - [ ] **State** - Estados do pedido
 - [ ] **Strategy** - Estratégias de cálculo (frete, desconto)
-- [ ] **Template Method** - Processo de pagamento
+- [x] **Template Method** - Processo de pagamento
 - [ ] **Visitor** - Operações sobre diferentes tipos de pedidos
 
 ## 📝 Exemplos de Uso (cURL)
