@@ -70,4 +70,16 @@ public class ProductController {
     public ResponseEntity<List<ProductDTO>> getAvailableProducts() {
         return ResponseEntity.ok(productService.getAvailableProducts());
     }
+
+    /**
+     * Endpoint para aplicar extras ao produto (Padrão Decorator).
+     * Permite adicionar embalagem de presente e/ou garantia estendida.
+     */
+    @GetMapping("/{id}/with-extras")
+    public ResponseEntity<ProductService.ProductWithExtras> getProductWithExtras(
+            @PathVariable Long id,
+            @RequestParam(required = false, defaultValue = "false") boolean giftWrap,
+            @RequestParam(required = false, defaultValue = "false") boolean warranty) {
+        return ResponseEntity.ok(productServiceProxy.applyExtras(id, giftWrap, warranty));
+    }
 }

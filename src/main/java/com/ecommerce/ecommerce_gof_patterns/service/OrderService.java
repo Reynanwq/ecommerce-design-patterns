@@ -9,6 +9,7 @@ import com.ecommerce.ecommerce_gof_patterns.repository.AddressRepository;
 import com.ecommerce.ecommerce_gof_patterns.repository.CustomerRepository;
 import com.ecommerce.ecommerce_gof_patterns.repository.OrderRepository;
 import com.ecommerce.ecommerce_gof_patterns.repository.ProductRepository;
+import com.ecommerce.ecommerce_gof_patterns.observer.OrderSubject;
 import lombok.RequiredArgsConstructor;
 import org.modelmapper.ModelMapper;
 import org.springframework.stereotype.Service;
@@ -28,6 +29,7 @@ public class OrderService {
     private final ProductRepository productRepository;
     private final AddressRepository addressRepository;
     private final ModelMapper modelMapper;
+    private final OrderSubject orderSubject;
 
     @Transactional(readOnly = true)
     public List<OrderDTO> getAllOrders() {
@@ -103,6 +105,8 @@ public class OrderService {
         order.setTotalAmount(subtotal.add(order.getShippingCost()).subtract(order.getDiscount()));
 
         Order savedOrder = orderRepository.save(order);
+        orderSubject.notifyObservers(savedOrder);
+
         return convertToDTO(savedOrder);
     }
 
@@ -113,6 +117,7 @@ public class OrderService {
 
         order.setStatus(newStatus);
         Order updatedOrder = orderRepository.save(order);
+        orderSubject.notifyObservers(updatedOrder);
         return convertToDTO(updatedOrder);
     }
 
@@ -129,6 +134,7 @@ public class OrderService {
         }
 
         Order updatedOrder = orderRepository.save(order);
+        orderSubject.notifyObservers(updatedOrder);
         return convertToDTO(updatedOrder);
     }
 
@@ -151,6 +157,7 @@ public class OrderService {
         order.setStatus(OrderStatus.CANCELLED);
         order.setPaymentStatus(PaymentStatus.CANCELLED);
         orderRepository.save(order);
+        orderSubject.notifyObservers(order);
     }
 
     private String generateOrderNumber() {

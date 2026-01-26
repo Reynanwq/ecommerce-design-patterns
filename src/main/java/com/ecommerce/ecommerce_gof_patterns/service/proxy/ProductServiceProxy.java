@@ -162,4 +162,10 @@ public class ProductServiceProxy {
             return String.format("Cache: %d entries, TTL: %d seconds", size, ttlSeconds);
         }
     }
+
+    public ProductService.ProductWithExtras applyExtras(Long id, boolean giftWrap, boolean warranty) {
+        return productService.applyExtras(id, giftWrap, warranty);
+    }
+
+
 }

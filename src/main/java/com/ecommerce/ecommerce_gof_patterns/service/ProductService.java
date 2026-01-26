@@ -97,4 +97,46 @@ public class ProductService {
                 .map(product -> modelMapper.map(product, ProductDTO.class))
                 .collect(Collectors.toList());
     }
+
+    //design decorator
+    public ProductWithExtras applyExtras(Long productId, boolean addGiftWrap, boolean addWarranty) {
+        Product product = productRepository.findById(productId)
+                .orElseThrow(() -> new ResourceNotFoundException("Product", "id", productId));
+
+        String description = product.getName();
+        BigDecimal price = product.getPrice();
+
+        // Aplicar decoradores
+        if (addGiftWrap) {
+            description += " + Embalagem para Presente";
+            price = price.add(new BigDecimal("15.00"));
+        }
+
+        if (addWarranty) {
+            description += " + Garantia Estendida";
+            price = price.add(new BigDecimal("99.00"));
+        }
+
+        return new ProductWithExtras(product.getId(), description, price);
+    }
+
+    /**
+     * Classe interna para retornar produto decorado.
+     */
+    public static class ProductWithExtras {
+        private Long id;
+        private String description;
+        private BigDecimal finalPrice;
+
+        public ProductWithExtras(Long id, String description, BigDecimal finalPrice) {
+            this.id = id;
+            this.description = description;
+            this.finalPrice = finalPrice;
+        }
+
+        public Long getId() { return id; }
+        public String getDescription() { return description; }
+        public BigDecimal getFinalPrice() { return finalPrice; }
+    }
+
 }
