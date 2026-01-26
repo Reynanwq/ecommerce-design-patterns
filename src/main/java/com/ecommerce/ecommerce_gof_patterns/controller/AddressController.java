@@ -1,6 +1,7 @@
 package com.ecommerce.ecommerce_gof_patterns.controller;
 
 import com.ecommerce.ecommerce_gof_patterns.dto.AddressDTO;
+import com.ecommerce.ecommerce_gof_patterns.facade.AddressFacade;
 import com.ecommerce.ecommerce_gof_patterns.service.AddressService;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
@@ -16,6 +17,8 @@ public class AddressController {
 
     private final AddressService addressService;
 
+    private final AddressFacade addressFacade;
+
     @GetMapping("/customer/{customerId}")
     public ResponseEntity<List<AddressDTO>> getAddressesByCustomerId(@PathVariable Long customerId) {
         return ResponseEntity.ok(addressService.getAddressesByCustomerId(customerId));
@@ -23,7 +26,7 @@ public class AddressController {
 
     @GetMapping("/{id}")
     public ResponseEntity<AddressDTO> getAddressById(@PathVariable Long id) {
-        return ResponseEntity.ok(addressService.getAddressById(id));
+        return ResponseEntity.ok(addressFacade.getAddress(id));
     }
 
     @PostMapping
