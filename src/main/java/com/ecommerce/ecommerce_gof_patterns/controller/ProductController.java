@@ -1,6 +1,7 @@
 package com.ecommerce.ecommerce_gof_patterns.controller;
 
 import com.ecommerce.ecommerce_gof_patterns.dto.ProductDTO;
+import com.ecommerce.ecommerce_gof_patterns.factory.ProductFactoryCreator;
 import com.ecommerce.ecommerce_gof_patterns.model.ProductCategory;
 import com.ecommerce.ecommerce_gof_patterns.service.ProductService;
 import com.ecommerce.ecommerce_gof_patterns.service.proxy.ProductServiceProxy;
@@ -19,7 +20,7 @@ public class ProductController {
 
     private final ProductService productService;
     private final ProductServiceProxy productServiceProxy;
-
+    private final ProductFactoryCreator productFactoryCreator;
     @GetMapping
     public ResponseEntity<List<ProductDTO>> getAllProducts() {
         return ResponseEntity.ok(productService.getAllProducts());
@@ -81,5 +82,20 @@ public class ProductController {
             @RequestParam(required = false, defaultValue = "false") boolean giftWrap,
             @RequestParam(required = false, defaultValue = "false") boolean warranty) {
         return ResponseEntity.ok(productServiceProxy.applyExtras(id, giftWrap, warranty));
+    }
+
+    /**
+     * Endpoint para usar o Factory Pattern.
+     * Retorna produtos específicos por categoria usando factory.
+     */
+    @GetMapping("/factory/{category}")
+    public ResponseEntity<List<ProductDTO>> getProductsByFactory(@PathVariable ProductCategory category) {
+        try {
+            var factory = productFactoryCreator.getFactory(category);
+            return ResponseEntity.ok(factory.getProducts());
+        } catch (IllegalArgumentException e) {
+            return ResponseEntity.status(HttpStatus.NOT_IMPLEMENTED)
+                    .body(List.of());
+        }
     }
 }
