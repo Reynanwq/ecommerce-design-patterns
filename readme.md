@@ -101,14 +101,14 @@ mvn spring-boot:run
 ## 🎨 Padrões GOF a Serem Implementados
 
 ### Padrões Criacionais
-- [ ] **Factory Method** - Criação de diferentes tipos de produtos
-- [ ] **Abstract Factory** - Famílias de produtos relacionados
+- [x] **Factory Method** - Criação de diferentes tipos de produtos
+- [x] **Abstract Factory** - Famílias de produtos relacionados
 - [ ] **Builder** - Construção complexa de pedidos
 - [ ] **Prototype** - Clonagem de produtos/pedidos
 - [x] **Singleton** - Configurações da aplicação
 
 ### Padrões Estruturais
-- [ ] **Adapter** - Integração com gateways de pagamento
+- [x] **Adapter** - Integração com gateways de pagamento
 - [ ] **Bridge** - Separação de tipos de produto e suas representações
 - [ ] **Composite** - Estrutura de categorias de produtos
 - [x] **Decorator** - Adição de recursos a produtos (embalagem, garantia)
@@ -123,7 +123,7 @@ mvn spring-boot:run
 - [ ] **Mediator** - Comunicação entre componentes
 - [ ] **Memento** - Histórico de estados
 - [x] **Observer** - Notificações de mudanças de status
-- [ ] **State** - Estados do pedido
+- [x] **State** - Estados do pedido
 - [ ] **Strategy** - Estratégias de cálculo (frete, desconto)
 - [x] **Template Method** - Processo de pagamento
 - [ ] **Visitor** - Operações sobre diferentes tipos de pedidos
