@@ -1,5 +1,8 @@
 package com.ecommerce.ecommerce_gof_patterns.service;
 
+import com.ecommerce.ecommerce_gof_patterns.adapter.LegacyPaymentGateway;
+import com.ecommerce.ecommerce_gof_patterns.adapter.PaymentGatewayAdapter;
+import com.ecommerce.ecommerce_gof_patterns.adapter.PaymentProcessor;
 import com.ecommerce.ecommerce_gof_patterns.dto.CustomerDTO;
 import com.ecommerce.ecommerce_gof_patterns.exception.BusinessException;
 import com.ecommerce.ecommerce_gof_patterns.exception.ResourceNotFoundException;
@@ -49,6 +52,8 @@ public class CustomerService {
         customer.setActive(true);
         // Em produção, criptografar a senha com BCrypt
         Customer savedCustomer = customerRepository.save(customer);
+
+        processInitialPayment(savedCustomer);
         return modelMapper.map(savedCustomer, CustomerDTO.class);
     }
 
@@ -89,5 +94,15 @@ public class CustomerService {
         Customer customer = customerRepository.findByEmail(email)
                 .orElseThrow(() -> new ResourceNotFoundException("Customer", "email", email));
         return modelMapper.map(customer, CustomerDTO.class);
+    }
+
+    private void processInitialPayment(Customer customer) {
+        // Criando e usando o adapter
+        LegacyPaymentGateway legacyGateway = new LegacyPaymentGateway();
+        PaymentProcessor paymentProcessor = new PaymentGatewayAdapter(legacyGateway);
+
+        // Chamada uniforme
+        boolean success = paymentProcessor.processPayment(0.01, "BRL"); // Pagamento simbólico
+        System.out.println("Pagamento inicial processado: " + success);
     }
 }

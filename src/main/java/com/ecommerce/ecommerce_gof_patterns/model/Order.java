@@ -1,6 +1,7 @@
 package com.ecommerce.ecommerce_gof_patterns.model;
 
 
+import com.ecommerce.ecommerce_gof_patterns.state.OrderProcessStateFactory;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Data;
@@ -90,5 +91,39 @@ public class Order {
     public void removeItem(OrderItem item) {
         items.remove(item);
         item.setOrder(null);
+    }
+
+    /**
+     * VERSÃO ANTIGA COM IF/ELSE (PROBLEMA):
+     *
+     * public void process() {
+     *     if (status == OrderStatus.PENDING) {
+     *         System.out.println("Processando pedido pendente...");
+     *         status = OrderStatus.PROCESSING;
+     *     } else if (status == OrderStatus.PROCESSING) {
+     *         System.out.println("Pedido já está em processamento...");
+     *     } else if (status == OrderStatus.SHIPPED) {
+     *         System.out.println("Pedido já foi enviado, não pode ser processado novamente...");
+     *     } else if (status == OrderStatus.DELIVERED) {
+     *         System.out.println("Pedido já foi entregue...");
+     *     } else if (status == OrderStatus.CANCELLED) {
+     *         System.out.println("Pedido cancelado não pode ser processado...");
+     *     } else if (status == OrderStatus.REFUNDED) {
+     *         System.out.println("Pedido reembolsado não pode ser processado...");
+     *     }
+     * }
+     */
+
+    /**
+     * VERSÃO NOVA COM STATE PATTERN (SOLUÇÃO):
+     */
+    public void process() {
+        // Usa a factory para obter o estado correto baseado no status atual
+        var state = OrderProcessStateFactory.getState(this.status);
+
+        // Delega o processamento para o estado específico
+        state.process(this);
+
+        System.out.println("Status final do pedido " + id + ": " + this.status);
     }
 }
