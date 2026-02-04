@@ -6,4 +6,5 @@ import com.ecommerce.ecommerce_gof_patterns.model.OrderStatus;
 public interface OrderProcessState {
     void process(Order order);
     OrderStatus getStatus();
+    void setContext(OrderProcessContext context);
 }

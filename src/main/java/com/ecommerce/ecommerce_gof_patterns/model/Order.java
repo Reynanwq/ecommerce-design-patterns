@@ -1,6 +1,7 @@
 package com.ecommerce.ecommerce_gof_patterns.model;
 
 
+import com.ecommerce.ecommerce_gof_patterns.state.OrderProcessContext;
 import com.ecommerce.ecommerce_gof_patterns.state.OrderProcessStateFactory;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
@@ -117,13 +118,22 @@ public class Order {
     /**
      * VERSÃO NOVA COM STATE PATTERN (SOLUÇÃO):
      */
+
+    @Transient
+    private OrderProcessContext processContext;
+
+    @PostLoad
+    @PostPersist
+    @PostUpdate
+    public void initProcessContext() {
+        if (processContext == null) {
+            processContext = new OrderProcessContext(this.status);
+        }
+    }
+
     public void process() {
-        // Usa a factory para obter o estado correto baseado no status atual
-        var state = OrderProcessStateFactory.getState(this.status);
-
-        // Delega o processamento para o estado específico
-        state.process(this);
-
-        System.out.println("Status final do pedido " + id + ": " + this.status);
+        initProcessContext();
+        processContext.process(this);
+        this.status = processContext.getStatus();
     }
 }

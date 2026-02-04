@@ -8,8 +8,8 @@ import java.util.concurrent.ConcurrentHashMap;
 public class OrderProcessStateFactory {
     private static final Map<OrderStatus, OrderProcessState> states = new ConcurrentHashMap<>();
 
-    //bloco que executa automaticamente quando a classe é carregada na memória.
     static {
+        // Criando os estados uma vez
         states.put(OrderStatus.PENDING, new PendingProcessState());
         states.put(OrderStatus.PROCESSING, new ProcessingProcessState());
         states.put(OrderStatus.SHIPPED, new ShippedProcessState());
@@ -25,5 +25,4 @@ public class OrderProcessStateFactory {
         }
         return state;
     }
-
 }
